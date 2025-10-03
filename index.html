@@ -2969,235 +2969,138 @@
     <!-- Loading Bar -->
     <div class="loading-bar" id="loading-bar"></div>
     
-    <!-- Tattoo Gallery Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Base Dark Background -->
-        <div class="absolute inset-0 bg-gradient-to-br from-black via-darker-gray to-black"></div>
-        
-        <!-- Tattoo Photo Background Mosaic -->
-        <div class="absolute inset-0 tattoo-photo-bg">
-            <!-- Background Photo Grid -->
-            <div class="tattoo-photo-grid">
-                <!-- Row 1 -->
-                <div class="tattoo-photo-row row-1">
-                    <div class="tattoo-photo photo-1">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop&crop=center" alt="Traditional Tattoo" 
-                             onerror="this.src='https://picsum.photos/400/600?random=tattoo1'">
-                    </div>
-                    <div class="tattoo-photo photo-2">
-                        <img src="https://images.unsplash.com/photo-1590246814883-57c511e75c8e?w=300&h=400&fit=crop&crop=center" alt="Geometric Tattoo" 
-                             onerror="this.src='https://picsum.photos/300/400?random=tattoo2'">
-                    </div>
-                    <div class="tattoo-photo photo-3">
-                        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=350&h=500&fit=crop&crop=center" alt="Realistic Tattoo" 
-                             onerror="this.src='https://picsum.photos/350/500?random=tattoo3'">
-                    </div>
-                </div>
-                
-                <!-- Row 2 -->
-                <div class="tattoo-photo-row row-2">
-                    <div class="tattoo-photo photo-4">
-                        <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=280&h=420&fit=crop&crop=center" alt="Arm Tattoo" 
-                             onerror="this.src='https://picsum.photos/280/420?random=tattoo4'">
-                    </div>
-                    <div class="tattoo-photo photo-5">
-                        <img src="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?w=450&h=300&fit=crop&crop=center" alt="Back Tattoo" 
-                             onerror="this.src='https://picsum.photos/450/300?random=tattoo5'">
-                    </div>
-                    <div class="tattoo-photo photo-6">
-                        <img src="https://images.unsplash.com/photo-1590246814883-57c511e75c8e?w=320&h=480&fit=crop&crop=center" alt="Leg Tattoo" 
-                             onerror="this.src='https://picsum.photos/320/480?random=tattoo6'">
-                    </div>
-                </div>
-                
-                <!-- Row 3 -->
-                <div class="tattoo-photo-row row-3">
-                    <div class="tattoo-photo photo-7">
-                        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=380&h=280&fit=crop&crop=center" alt="Chest Tattoo" 
-                             onerror="this.src='https://picsum.photos/380/280?random=tattoo7'">
-                    </div>
-                    <div class="tattoo-photo photo-8">
-                        <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=300&h=450&fit=crop&crop=center" alt="Hand Tattoo" 
-                             onerror="this.src='https://picsum.photos/300/450?random=tattoo8'">
-                    </div>
-                    <div class="tattoo-photo photo-9">
-                        <img src="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?w=360&h=360&fit=crop&crop=center" alt="Shoulder Tattoo" 
-                             onerror="this.src='https://picsum.photos/360/360?random=tattoo9'">
-                    </div>
-                </div>
+    <!-- Premium Tattoo Studio Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+        <!-- Dynamic Background -->
+        <div class="absolute inset-0">
+            <!-- Main Background Image -->
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=1920&h=1080&fit=crop&crop=center" 
+                     alt="Tattoo Studio Background" 
+                     class="w-full h-full object-cover"
+                     onerror="this.src='https://picsum.photos/1920/1080?random=tattoo-bg'">
             </div>
+            
+            <!-- Dark Overlay for Better Text Readability -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
         </div>
         
-        <!-- Dark Overlay with Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/80"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/70"></div>
-        
-        <!-- Subtle Pattern Overlay -->
-        <div class="absolute inset-0 opacity-5">
-            <div class="h-full w-full" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 50px 50px;"></div>
-        </div>
-        
-        <!-- Floating Ink Particles -->
-        <div class="absolute inset-0 ink-particles">
-            <div class="particle particle-1"></div>
-            <div class="particle particle-2"></div>
-            <div class="particle particle-3"></div>
-            <div class="particle particle-4"></div>
-            <div class="particle particle-5"></div>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 py-20">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Main Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[80vh]">
+                
                 <!-- Left Content -->
-                <div class="text-left">
-                    <!-- Badge -->
-                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-neon-red/10 border border-neon-red/20 text-neon-red text-sm font-medium mb-8 reveal">
-                        <span class="w-2 h-2 bg-neon-red rounded-full mr-2 animate-pulse"></span>
-                        Premium Tattoo Studio
+                <div class="text-center lg:text-left space-y-6 lg:space-y-8">
+                    <!-- Studio Badge -->
+                    <div class="inline-flex items-center px-4 py-2 bg-neon-red/10 border border-neon-red/30 rounded-full text-neon-red text-sm font-medium mb-4">
+                        <div class="w-2 h-2 bg-neon-red rounded-full mr-2 animate-pulse"></div>
+                        <span class="tracking-wider uppercase">Premium Tattoo Studio</span>
                     </div>
                     
                     <!-- Main Headline -->
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 reveal">
-                        <span class="block text-white">Transform Your</span>
-                        <span class="block gradient-text font-script">Story Into Art</span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight text-white mb-6">
+                        <span class="block">Transform Your</span>
+                        <span class="block text-neon-red">Story Into</span>
+                        <span class="block">Art</span>
                     </h1>
                     
-                    <!-- Subtitle -->
-                    <p class="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed reveal max-w-lg">
-                        Experience world-class tattoo artistry with our master artists. From minimalist designs to complex masterpieces.
+                    <!-- Subheading -->
+                    <p class="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Experience world-class tattoo artistry with our master artists. From minimalist designs to complex masterpieces, we bring your vision to life.
                     </p>
                     
                     <!-- CTA Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4 mb-12 reveal">
-                        <a href="#booking" class="group relative inline-flex items-center justify-center px-8 py-4 bg-neon-red hover:bg-red-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-neon-red/25">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+                        <a href="#booking" class="inline-flex items-center justify-center px-8 py-4 bg-neon-red hover:bg-red-600 text-white font-bold text-lg rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-neon-red/25">
                             <i class="fas fa-calendar-check mr-3"></i>
                             Book Consultation
-                            <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-neon-red to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                         </a>
-                        <a href="#gallery" class="group inline-flex items-center justify-center px-8 py-4 border-2 border-gray-600 hover:border-neon-red text-white hover:text-neon-red font-semibold rounded-xl transition-all duration-300">
-                            <i class="fas fa-play mr-3"></i>
-                            View Our Work
+                        <a href="#gallery" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 hover:border-neon-red text-white hover:text-neon-red font-bold text-lg rounded-lg transition-all duration-300 hover:bg-white/5">
+                            <i class="fas fa-images mr-3"></i>
+                            View Gallery
                         </a>
                     </div>
                     
-                    <!-- Social Proof -->
-                    <div class="flex items-center space-x-8 reveal">
-                        <div class="flex items-center space-x-2">
+                    <!-- Trust Indicators -->
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-6 text-center lg:text-left">
+                        <div class="flex items-center space-x-3">
                             <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-neon-red to-pink-500 border-2 border-darker-gray"></div>
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-electric-blue to-blue-500 border-2 border-darker-gray"></div>
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-glow to-purple-500 border-2 border-darker-gray"></div>
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 border-2 border-darker-gray flex items-center justify-center text-xs font-bold text-white">+</div>
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-neon-red to-pink-500 border-2 border-white/20"></div>
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-electric-blue to-blue-500 border-2 border-white/20"></div>
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-glow to-purple-500 border-2 border-white/20"></div>
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 border-2 border-white/20 flex items-center justify-center text-xs font-bold text-white">+</div>
                             </div>
-                            <div class="text-sm text-gray-400">
-                                <span class="font-semibold text-white">500+</span> satisfied clients
+                            <div>
+                                <div class="text-white font-bold text-lg">500+</div>
+                                <div class="text-gray-400 text-sm">Happy Clients</div>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-1">
-                            <div class="flex text-yellow-400">
+                        
+                        <div class="flex items-center space-x-3">
+                            <div class="flex text-yellow-400 text-lg">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <span class="text-sm text-gray-400 ml-2">5.0 rating</span>
+                            <div>
+                                <div class="text-white font-bold text-lg">5.0</div>
+                                <div class="text-gray-400 text-sm">Rating</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-r from-neon-red to-electric-blue rounded-full flex items-center justify-center">
+                                <i class="fas fa-award text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-bold text-lg">8+</div>
+                                <div class="text-gray-400 text-sm">Years Experience</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Right Visual -->
-                <div class="relative reveal">
-                    <!-- Main Visual Card -->
-                    <div class="relative">
-                        <!-- Background Cards -->
-                        <div class="absolute -top-4 -right-4 w-full h-full bg-gradient-to-br from-neon-red/20 to-electric-blue/20 rounded-2xl transform rotate-3 blur-sm"></div>
-                        <div class="absolute -top-2 -right-2 w-full h-full bg-gradient-to-br from-electric-blue/20 to-purple-glow/20 rounded-2xl transform rotate-1 blur-sm"></div>
+                <div class="relative order-first lg:order-last">
+                    <!-- Main Image Container -->
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=800&h=1000&fit=crop&crop=center" 
+                             alt="Tattoo Artist at Work" 
+                             class="w-full h-[500px] sm:h-[600px] lg:h-[700px] object-cover transition-transform duration-500 hover:scale-105"
+                             onerror="this.src='https://picsum.photos/800/1000?random=tattoo-artist'">
                         
-                        <!-- Main Card -->
-                        <div class="relative bg-gradient-to-br from-dark-gray to-darker-gray rounded-2xl p-8 border border-gray-700/50 backdrop-blur-sm">
-                            <!-- Artist Showcase -->
-                            <div class="space-y-6">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-lg font-semibold text-white">Featured Artists</h3>
-                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                </div>
-                                
-                                <!-- Artist Cards -->
-                                <div class="space-y-4">
-                                    <div class="flex items-center space-x-4 p-4 bg-darker-gray/50 rounded-xl border border-gray-700/30">
-                                        <div class="w-12 h-12 bg-gradient-to-r from-neon-red to-pink-500 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-brush text-white"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <p class="font-semibold text-white">Marcus Steel</p>
-                                            <p class="text-sm text-gray-400">Blackwork Specialist</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="flex text-yellow-400 text-xs">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <p class="text-xs text-gray-400">10+ years</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex items-center space-x-4 p-4 bg-darker-gray/50 rounded-xl border border-gray-700/30">
-                                        <div class="w-12 h-12 bg-gradient-to-r from-purple-glow to-purple-500 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-palette text-white"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <p class="font-semibold text-white">Luna Rose</p>
-                                            <p class="text-sm text-gray-400">Watercolor Artist</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="flex text-yellow-400 text-xs">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                            <p class="text-xs text-gray-400">8+ years</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Stats -->
-                                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-700/30">
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold gradient-text">500+</p>
-                                        <p class="text-xs text-gray-400">Clients</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold gradient-text">10+</p>
-                                        <p class="text-xs text-gray-400">Years</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold gradient-text">4</p>
-                                        <p class="text-xs text-gray-400">Artists</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         
                         <!-- Floating Elements -->
-                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-neon-red/20 rounded-full flex items-center justify-center animate-pulse">
-                            <i class="fas fa-award text-neon-red text-xl"></i>
+                        <div class="absolute top-4 right-4 w-12 h-12 bg-neon-red/90 rounded-full flex items-center justify-center">
+                            <i class="fas fa-play text-white text-lg"></i>
                         </div>
-                        <div class="absolute -bottom-6 -right-6 w-20 h-20 bg-electric-blue/20 rounded-full flex items-center justify-center animate-bounce">
-                            <i class="fas fa-certificate text-electric-blue text-xl"></i>
+                        
+                        <!-- Image Info -->
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <p class="font-bold text-lg">Master Artist at Work</p>
+                            <p class="text-sm opacity-80">Traditional Japanese Style</p>
                         </div>
                     </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-neon-red/20 to-electric-blue/20 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-r from-purple-glow/20 to-pink-500/20 rounded-full blur-xl"></div>
                 </div>
             </div>
         </div>
+        
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div class="w-6 h-10 border-2 border-neon-red rounded-full flex justify-center">
-                <div class="w-1 h-3 bg-neon-red rounded-full mt-2 animate-pulse"></div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <div class="flex flex-col items-center space-y-2">
+                <span class="text-white/70 text-sm font-medium tracking-wider uppercase">Scroll Down</span>
+                <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+                    <div class="w-1 h-3 bg-white/70 rounded-full mt-2 animate-bounce"></div>
+                </div>
             </div>
         </div>
     </section>
