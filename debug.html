@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Page</title>
+</head>
+<body>
+    <h1>Debug Information</h1>
+    <p>Server is running at: <a href="http://localhost:8080/index_simple.html">http://localhost:8080/index_simple.html</a></p>
+    <p>Original page: <a href="http://localhost:8080/index.html">http://localhost:8080/index.html</a></p>
+    <p>Test page: <a href="http://localhost:8080/test.html">http://localhost:8080/test.html</a></p>
+    
+    <h2>File Status:</h2>
+    <ul>
+        <li>index.html: <?php echo file_exists('index.html') ? 'EXISTS' : 'MISSING'; ?></li>
+        <li>script.js: <?php echo file_exists('script.js') ? 'EXISTS' : 'MISSING'; ?></li>
+        <li>index_simple.html: <?php echo file_exists('index_simple.html') ? 'EXISTS' : 'MISSING'; ?></li>
+    </ul>
+    
+    <h2>PHP Info:</h2>
+    <p>PHP Version: <?php echo phpversion(); ?></p>
+    <p>Current Directory: <?php echo getcwd(); ?></p>
+    
+    <script>
+        console.log('Debug page loaded');
+        console.log('Current URL:', window.location.href);
+    </script>
+</body>
+</html>

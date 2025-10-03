@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & Safety - Narshimha Tattoo Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-red': '#ff3333',
+                        'electric-blue': '#00bfff',
+                        'purple-glow': '#8a2be2',
+                        'dark-gray': '#1a1a1a',
+                        'darker-gray': '#0f0f0f'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'dancing': ['Dancing Script', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tattoo-font {
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ff3333, #00bfff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, #ff3333, #00bfff, #8a2be2);
+            height: 2px;
+        }
+        
+        .safety-icon {
+            background: linear-gradient(135deg, #ff3333, #00bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-darker-gray text-white font-inter">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-darker-gray/95 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 bg-black border-2 border-neon-red rounded-full flex items-center justify-center group-hover:rotate-6 transition-all duration-500">
+                        <svg class="w-6 h-6 text-neon-red" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 4h8v2H8V4zm1 3h6v1H9V7zm0 2h6v1H9V9zm-1 2h8v1H8v-1zm1 2h6v1H9v-1zm0 2h6v1H9v-1z"/>
+                            <path d="M11 16h2v6h-2v-6z"/>
+                            <path d="M10 14h4v2h-4v-2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-xl font-bold text-white group-hover:text-neon-red transition-colors tattoo-font">Narshimha Tattoo</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider">Studio</div>
+                    </div>
+                </a>
+                <a href="index.html" class="text-gray-300 hover:text-neon-red transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6 gradient-text">Health & Safety</h1>
+                <div class="section-divider w-32 mx-auto mb-6"></div>
+                <p class="text-xl text-gray-300">Your safety and well-being are our top priorities</p>
+            </div>
+
+            <!-- Content -->
+            <div class="prose prose-invert max-w-none">
+                <!-- Safety Standards -->
+                <div class="bg-dark-gray rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-neon-red mb-6 flex items-center">
+                        <i class="fas fa-shield-alt safety-icon text-3xl mr-4"></i>
+                        Our Safety Standards
+                    </h2>
+                    <p class="text-gray-300 mb-4">At Narshimha Tattoo Studio, we maintain the highest standards of health and safety to ensure your well-being and peace of mind.</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>All equipment is sterilized using medical-grade autoclaves</li>
+                        <li>Single-use needles and disposable materials for every client</li>
+                        <li>Regular health department inspections and certifications</li>
+                        <li>Bloodborne pathogen training for all staff members</li>
+                        <li>Proper disposal of all biohazardous materials</li>
+                    </ul>
+                </div>
+
+                <!-- Pre-Appointment Guidelines -->
+                <div class="bg-dark-gray rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-neon-red mb-6 flex items-center">
+                        <i class="fas fa-clipboard-check safety-icon text-3xl mr-4"></i>
+                        Pre-Appointment Guidelines
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-electric-blue mb-3">What to Do:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Get a good night's sleep</li>
+                                <li>Eat a substantial meal 2-3 hours before</li>
+                                <li>Stay hydrated throughout the day</li>
+                                <li>Wear comfortable, loose-fitting clothing</li>
+                                <li>Bring valid photo ID</li>
+                                <li>Arrive on time for your appointment</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-neon-red mb-3">What to Avoid:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Alcohol consumption 24 hours before</li>
+                                <li>Blood thinners (aspirin, ibuprofen)</li>
+                                <li>Excessive caffeine</li>
+                                <li>Sun exposure on the tattoo area</li>
+                                <li>Tanning beds or spray tans</li>
+                                <li>Stressful activities before your session</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Considerations -->
+                <div class="bg-dark-gray rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-neon-red mb-6 flex items-center">
+                        <i class="fas fa-user-md safety-icon text-3xl mr-4"></i>
+                        Medical Considerations
+                    </h2>
+                    <p class="text-gray-300 mb-4">Please inform us if you have any of the following conditions:</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-electric-blue mb-3">Health Conditions:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Diabetes or blood sugar issues</li>
+                                <li>Heart conditions or pacemaker</li>
+                                <li>Blood clotting disorders</li>
+                                <li>Autoimmune diseases</li>
+                                <li>Skin conditions (eczema, psoriasis)</li>
+                                <li>Allergies to metals or inks</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-neon-red mb-3">Medications:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Blood thinners (Warfarin, Heparin)</li>
+                                <li>Immunosuppressants</li>
+                                <li>Accutane or similar medications</li>
+                                <li>Antibiotics (current course)</li>
+                                <li>Steroids or cortisone</li>
+                                <li>Any medication affecting healing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aftercare Instructions -->
+                <div class="bg-dark-gray rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-neon-red mb-6 flex items-center">
+                        <i class="fas fa-heart safety-icon text-3xl mr-4"></i>
+                        Aftercare Instructions
+                    </h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-electric-blue mb-3">First 24 Hours:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Keep the bandage on for 2-4 hours</li>
+                                <li>Gently wash with antibacterial soap</li>
+                                <li>Pat dry with clean paper towel</li>
+                                <li>Apply thin layer of recommended ointment</li>
+                                <li>Avoid touching the tattoo with dirty hands</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-electric-blue mb-3">First Week:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Wash 2-3 times daily with antibacterial soap</li>
+                                <li>Apply ointment 2-3 times daily</li>
+                                <li>Wear loose, breathable clothing</li>
+                                <li>Sleep on clean sheets</li>
+                                <li>Avoid swimming, hot tubs, or saunas</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-neon-red mb-3">What to Avoid:</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2">
+                                <li>Picking or scratching the tattoo</li>
+                                <li>Direct sunlight or tanning</li>
+                                <li>Heavy exercise for first few days</li>
+                                <li>Submerging in water (baths, pools)</li>
+                                <li>Using harsh soaps or scrubs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warning Signs -->
+                <div class="bg-gradient-to-r from-red-900/20 to-red-800/20 border border-red-500/30 rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-red-400 mb-6 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-3xl mr-4"></i>
+                        Warning Signs - Contact Us Immediately
+                    </h2>
+                    <p class="text-gray-300 mb-4">If you experience any of the following, contact us immediately:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Excessive redness, swelling, or heat around the tattoo</li>
+                        <li>Pus or unusual discharge</li>
+                        <li>Fever or chills</li>
+                        <li>Rash or allergic reaction</li>
+                        <li>Severe pain that doesn't improve</li>
+                        <li>Any concerns about healing</li>
+                    </ul>
+                </div>
+
+                <!-- Studio Cleanliness -->
+                <div class="bg-dark-gray rounded-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-neon-red mb-6 flex items-center">
+                        <i class="fas fa-broom safety-icon text-3xl mr-4"></i>
+                        Studio Cleanliness
+                    </h2>
+                    <p class="text-gray-300 mb-4">We maintain the highest standards of cleanliness and sterilization:</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>All surfaces disinfected between clients</li>
+                        <li>Sterilized equipment for each procedure</li>
+                        <li>Disposable barriers on all equipment</li>
+                        <li>Regular health department inspections</li>
+                        <li>Proper waste disposal procedures</li>
+                        <li>Clean, well-ventilated workspace</li>
+                    </ul>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="bg-dark-gray rounded-2xl p-8">
+                    <h2 class="text-2xl font-bold text-neon-red mb-6 flex items-center">
+                        <i class="fas fa-phone safety-icon text-3xl mr-4"></i>
+                        Emergency Contact
+                    </h2>
+                    <p class="text-gray-300 mb-4">If you have any health concerns or questions about your tattoo:</p>
+                    <div class="text-gray-300 space-y-2">
+                        <p><i class="fas fa-phone text-neon-red mr-3"></i>(555) 123-TATT</p>
+                        <p><i class="fas fa-envelope text-neon-red mr-3"></i>health@narshimhatattoo.com</p>
+                        <p><i class="fas fa-map-marker-alt text-neon-red mr-3"></i>123 Ink Street, Art District, City 12345</p>
+                        <p class="text-sm text-gray-400 mt-4">Available for aftercare questions: Mon-Sat 10AM-8PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">&copy; 2024 Narshimha Tattoo Studio. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
