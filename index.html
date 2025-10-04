@@ -830,9 +830,10 @@
         }
         
         .logo-container:hover::before {
-            width: 200px;
-            height: 200px;
+            width: 300px;
+            height: 300px;
         }
+        
         
         /* Logo Icon Advanced Effects */
         .logo-icon .w-12,
@@ -1703,7 +1704,7 @@
         /* Modern Thumbnails */
         .modern-thumbnails {
             display: flex;
-            space-x: 8px;
+            gap: 8px;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             border-radius: 12px;
@@ -1804,14 +1805,6 @@
             z-index: 2;
         }
         
-        /* Tattoo Studio Logo Styles */
-        .tattoo-logo-container {
-            transition: all 0.3s ease;
-        }
-        
-        .tattoo-logo-icon {
-            position: relative;
-        }
         
         .tattoo-font {
             font-family: 'Georgia', 'Times New Roman', serif;
@@ -1864,64 +1857,7 @@
             }
         }
         
-        /* Logo Hover Effects */
-        .tattoo-logo-container:hover .ink-drop {
-            animation-duration: 1.5s;
-        }
         
-        /* Responsive Logo */
-        @media (max-width: 768px) {
-            .tattoo-logo-container {
-                space-x: 12px;
-            }
-            
-            .tattoo-logo-icon .w-14 {
-                width: 3rem;
-                height: 3rem;
-            }
-            
-            .tattoo-logo-icon svg {
-                width: 1.75rem;
-                height: 1.75rem;
-            }
-            
-            .tattoo-font {
-                font-size: 1.5rem;
-            }
-            
-            .tattoo-logo-text .text-xs {
-                font-size: 0.65rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tattoo-logo-container {
-                space-x: 8px;
-            }
-            
-            .tattoo-logo-icon .w-14 {
-                width: 2.5rem;
-                height: 2.5rem;
-            }
-            
-            .tattoo-logo-icon svg {
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-            
-            .tattoo-font {
-                font-size: 1.25rem;
-            }
-            
-            .tattoo-logo-text .text-xs {
-                font-size: 0.6rem;
-                letter-spacing: 0.1em;
-            }
-            
-            .ink-drop {
-                display: none;
-            }
-        }
         
         /* Tattoo Pattern Background */
         .tattoo-pattern-bg {
@@ -2863,95 +2799,47 @@
     <div class="cursor-glow" id="cursor"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="tattoo-logo-container flex items-center space-x-4 group cursor-pointer">
-                    <!-- Tattoo Studio Logo Icon -->
-                    <div class="tattoo-logo-icon relative">
-                        <div class="w-14 h-14 bg-black border-2 border-neon-red rounded-full flex items-center justify-center transform group-hover:rotate-6 transition-all duration-500 shadow-lg relative overflow-hidden">
-                            <!-- Tattoo Machine SVG -->
-                            <svg class="w-8 h-8 text-neon-red transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
-                                <!-- Tattoo Machine Body -->
-                                <path d="M8 4h8v2H8V4zm1 3h6v1H9V7zm0 2h6v1H9V9zm-1 2h8v1H8v-1zm1 2h6v1H9v-1zm0 2h6v1H9v-1z"/>
-                                <!-- Needle -->
-                                <path d="M11 16h2v6h-2v-6z"/>
-                                <!-- Grip -->
-                                <path d="M10 14h4v2h-4v-2z"/>
-                                <!-- Cord -->
-                                <path d="M16 6c1 0 2 1 2 2s-1 2-2 2-2-1-2-2 1-2 2-2z"/>
-                                <path d="M18 8c1 0 1.5.5 1.5 1s-.5 1-1.5 1-1.5-.5-1.5-1 .5-1 1.5-1z"/>
-                            </svg>
-                            
-                            <!-- Ink Drops Animation -->
-                            <div class="ink-drop ink-drop-1"></div>
-                            <div class="ink-drop ink-drop-2"></div>
-                            <div class="ink-drop ink-drop-3"></div>
-                            
-                            <!-- Border Glow -->
-                            <div class="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-electric-blue transition-all duration-500"></div>
-                        </div>
-                        
-                        <!-- Outer Glow Ring -->
-                        <div class="absolute inset-0 rounded-full border border-neon-red/30 scale-125 opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-700"></div>
-                    </div>
-                    
-                    <!-- Logo Text -->
-                    <div class="tattoo-logo-text">
-                        <div class="flex flex-col">
-                            <!-- Studio Name -->
-                            <div class="text-2xl font-bold text-white group-hover:text-neon-red transition-colors duration-500 relative">
-                                <span class="tattoo-font">Narshimha</span>
-                                <!-- Text Shadow Effect -->
-                                <div class="absolute inset-0 text-neon-red opacity-0 group-hover:opacity-30 blur-sm transition-all duration-500">Narshimha</div>
-                            </div>
-                            
-                            <!-- Subtitle with Decorative Elements -->
-                            <div class="flex items-center space-x-2 -mt-1">
-                                <div class="w-4 h-px bg-gradient-to-r from-transparent to-neon-red"></div>
-                                <div class="text-xs font-bold tracking-[0.2em] text-gray-400 group-hover:text-electric-blue transition-colors duration-300">
-                                    TATTOO STUDIO
-                                </div>
-                                <div class="w-4 h-px bg-gradient-to-l from-transparent to-neon-red"></div>
-                            </div>
-                            
-                            <!-- Decorative Underline -->
-                            <div class="mt-1 flex items-center space-x-1">
-                                <div class="w-2 h-px bg-neon-red"></div>
-                                <div class="w-1 h-1 bg-neon-red rounded-full animate-pulse"></div>
-                                <div class="flex-1 h-px bg-gradient-to-r from-neon-red via-electric-blue to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="hover:text-neon-red transition-colors">Home</a>
-                    <a href="#artists" class="hover:text-neon-red transition-colors">Artists</a>
-                    <a href="#gallery" class="hover:text-neon-red transition-colors">Gallery</a>
-                    <a href="#services" class="hover:text-neon-red transition-colors">Services</a>
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent" id="navbar">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center w-full py-1">
+                <!-- Logo -->
+                <a href="#home" class="hover:scale-105 transition-transform duration-300 flex items-center flex-shrink-0">
+                    <img src="img/main-logo/logo-5.png" alt="Narshimha Tattoo Studio Logo" class="h-14 md:h-18 lg:h-20 w-auto">
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8 flex-grow justify-end">
+                    <a href="#home" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Home</a>
+                    <a href="#artists" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Artists</a>
+                    <a href="#gallery" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Gallery</a>
+                    <a href="#services" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Services</a>
                     
                     <!-- Clean Book Now Button -->
-                    <a href="#booking" class="book-now-btn">
+                    <a href="#booking" class="book-now-btn flex-shrink-0">
                         <span class="book-now-text">
                             <i class="fas fa-calendar-plus mr-2"></i>
                             Book Now
                         </span>
                     </a>
                 </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-neon-red">
+                <div class="md:hidden flex-shrink-0">
+                    <button id="mobile-menu-btn" class="text-white hover:text-neon-red transition-colors duration-300 p-2 rounded-md hover:bg-neon-red/10">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-darker-gray border-t border-gray-800">
-            <div class="px-6 py-4 space-y-4">
-                <a href="#home" class="block hover:text-neon-red transition-colors">Home</a>
-                <a href="#artists" class="block hover:text-neon-red transition-colors">Artists</a>
-                <a href="#gallery" class="block hover:text-neon-red transition-colors">Gallery</a>
-                <a href="#services" class="block hover:text-neon-red transition-colors">Services</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800">
+            <div class="w-full px-4 py-6 space-y-4">
+                <!-- Mobile Logo -->
+                <a href="#home" class="pb-4 border-b border-gray-700 hover:scale-105 transition-transform duration-300 flex justify-center">
+                    <img src="img/main-logo/logo-5.png" alt="Narshimha Tattoo Studio Logo" class="h-12 w-auto">
+                </a>
+                
+                <a href="#home" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Home</a>
+                <a href="#artists" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Artists</a>
+                <a href="#gallery" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Gallery</a>
+                <a href="#services" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Services</a>
                 
                 <!-- Mobile Book Now Button -->
                 <div class="pt-2">
@@ -4079,49 +3967,6 @@
             <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-12 mb-12">
                 <!-- Brand Section -->
                 <div class="lg:col-span-2">
-                    <div class="tattoo-logo-container flex items-center space-x-4 mb-6 group cursor-pointer">
-                        <!-- Tattoo Studio Logo Icon -->
-                        <div class="tattoo-logo-icon relative">
-                            <div class="w-16 h-16 bg-black border-2 border-neon-red rounded-full flex items-center justify-center transform group-hover:rotate-6 transition-all duration-500 shadow-lg relative overflow-hidden">
-                                <!-- Tattoo Machine SVG -->
-                                <svg class="w-8 h-8 text-neon-red transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
-                                    <!-- Tattoo Machine Body -->
-                                    <path d="M8 4h8v2H8V4zm1 3h6v1H9V7zm0 2h6v1H9V9zm-1 2h8v1H8v-1zm1 2h6v1H9v-1zm0 2h6v1H9v-1z"/>
-                                    <!-- Needle -->
-                                    <path d="M11 16h2v6h-2v-6z"/>
-                                    <!-- Grip -->
-                                    <path d="M10 14h4v2h-4v-2z"/>
-                                    <!-- Cord -->
-                                    <path d="M16 6c1 0 2 1 2 2s-1 2-2 2-2-1-2-2 1-2 2-2z"/>
-                                    <path d="M18 8c1 0 1.5.5 1.5 1s-.5 1-1.5 1-1.5-.5-1.5-1 .5-1 1.5-1z"/>
-                                </svg>
-                                
-                                <!-- Border Glow -->
-                                <div class="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-electric-blue transition-all duration-500"></div>
-                            </div>
-                            
-                            <!-- Outer Glow Ring -->
-                            <div class="absolute inset-0 rounded-full border border-neon-red/30 scale-125 opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-700"></div>
-                        </div>
-                        
-                        <!-- Logo Text -->
-                        <div class="tattoo-logo-text">
-                            <div class="flex flex-col">
-                                <!-- Studio Name -->
-                                <div class="text-3xl font-bold text-white group-hover:text-neon-red transition-colors duration-500 relative">
-                                    <span class="tattoo-font">Narshimha</span>
-                                    <!-- Text Shadow Effect -->
-                                    <div class="absolute inset-0 text-neon-red opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-500">
-                                        <span class="tattoo-font">Narshimha</span>
-                                    </div>
-                                </div>
-                                <!-- Tagline -->
-                                <div class="text-sm font-bold tracking-[0.15em] text-gray-400 group-hover:text-electric-blue transition-colors duration-300 -mt-1">
-                                    TATTOO STUDIO
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     
                     <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-md">
                         Where artistry meets precision. We create timeless tattoos that tell your unique story with exceptional craftsmanship and care.
