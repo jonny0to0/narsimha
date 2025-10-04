@@ -122,6 +122,15 @@
             50% { transform: translateY(-20px); }
         }
         
+        @keyframes scroll-float {
+            0%, 100% { 
+                transform: translateY(0px); 
+            }
+            50% { 
+                transform: translateY(-8px); 
+            }
+        }
+        
         .gradient-text {
             background: linear-gradient(45deg, var(--neon-red), var(--electric-blue), var(--purple-glow));
             background-size: 300% 300%;
@@ -409,6 +418,54 @@
             transform: translateY(0);
         }
         
+        /* Scroll to Top Button */
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-red), #ff5555);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(255, 7, 58, 0.3);
+            animation: scroll-float 3s ease-in-out infinite;
+        }
+        
+        
+        .scroll-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top-btn:hover {
+            animation-play-state: paused;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(255, 7, 58, 0.5);
+            background: linear-gradient(135deg, #ff4444, var(--neon-red));
+        }
+        
+        .scroll-to-top-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .scroll-to-top-btn i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .cyber-grid {
@@ -433,6 +490,14 @@
             
             .neon-glow {
                 box-shadow: 0 0 10px rgba(255, 7, 58, 0.5); /* Reduce glow on mobile */
+            }
+            
+            .scroll-to-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
             }
         }
         
@@ -809,6 +874,84 @@
             height: 100%;
         }
         
+        /* Serial Number Styles for Main Gallery */
+        .serial-number {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, var(--neon-red), #ff5555);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+            box-shadow: 0 2px 8px rgba(255, 51, 51, 0.3);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .serial-number:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.5);
+        }
+
+        /* Enhanced Navigation Link Styles */
+        .nav-link, .nav-link-mobile {
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover, .nav-link-mobile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.2);
+        }
+        
+        .nav-link::before, .nav-link-mobile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .nav-link:hover::before, .nav-link-mobile:hover::before {
+            left: 100%;
+        }
+        
+        .nav-link-bg {
+            transform-origin: left center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link-border {
+            transform-origin: left center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Active state for navigation links */
+        .nav-link.active, .nav-link-mobile.active {
+            color: var(--neon-red);
+        }
+        
+        .nav-link.active .nav-link-bg,
+        .nav-link-mobile.active .nav-link-bg {
+            transform: scaleX(1);
+        }
+        
+        .nav-link.active .nav-link-border,
+        .nav-link-mobile.active .nav-link-border {
+            transform: scaleX(1);
+        }
+
         /* Enhanced Logo Styles */
         .logo-container {
             position: relative;
@@ -2799,19 +2942,66 @@
     <div class="cursor-glow" id="cursor"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent" id="navbar">
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
         <div class="w-full px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center w-full py-1">
                 <!-- Logo -->
-                <a href="#home" class="hover:scale-105 transition-transform duration-300 flex items-center flex-shrink-0">
-                    <img src="img/main-logo/logo-5.png" alt="Narshimha Tattoo Studio Logo" class="h-14 md:h-18 lg:h-20 w-auto">
+                <a href="#home" class="transition-all duration-300 flex items-center flex-shrink-0 group">
+                    <!-- Head Photo -->
+                    <div class="relative mr-2">
+                        <img src="img/main-logo/narshimha-head.png" alt="Narshimha Head" class="h-16 md:h-18 lg:h-20 w-auto rounded-lg group-hover:shadow-[inset_0_0_25px_rgba(255,7,58,0.4)] transition-all duration-300">
+                    </div>
+                    
+                    <!-- Text Logo -->
+                    <div class="flex flex-col">
+                        <!-- Main Name -->
+                        <h1 class="text-lg md:text-xl lg:text-2xl font-bold text-white group-hover:text-neon-red transition-colors duration-300 font-serif">
+                            Narshimha
+                        </h1>
+                        
+                        <!-- Studio Text with Decorative Lines -->
+                        <div class="flex items-center justify-center mt-0.5">
+                            <!-- Left decorative line -->
+                            <div class="w-4 h-0.5 bg-neon-red transition-all duration-300"></div>
+                            
+                            <!-- Studio Text -->
+                            <span class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300 font-sans uppercase tracking-wider mx-1">
+                                TATTOO STUDIO
+                            </span>
+                            
+                            <!-- Right decorative line -->
+                            <div class="w-4 h-0.5 bg-neon-red transition-all duration-300"></div>
+                        </div>
+                        
+                        <!-- Bottom Left Accent - Only this line extends on hover -->
+                        <div class="flex items-center mt-0.5">
+                            <div class="w-1 h-1 bg-neon-red rounded-full transition-transform duration-300"></div>
+                            <div class="w-2 h-0.5 bg-neon-red ml-1 group-hover:w-12 transition-all duration-700 ease-out"></div>
+                        </div>
+                    </div>
                 </a>
                 
                 <div class="hidden md:flex items-center space-x-8 flex-grow justify-end">
-                    <a href="#home" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Home</a>
-                    <a href="#artists" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Artists</a>
-                    <a href="#gallery" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Gallery</a>
-                    <a href="#services" class="text-white hover:text-neon-red transition-colors duration-300 font-medium px-3 py-2 rounded-md hover:bg-neon-red/10">Services</a>
+                    <a href="#home" class="nav-link text-white hover:text-neon-red transition-all duration-300 font-medium px-3 py-2 rounded-md relative overflow-hidden group">
+                        <span class="relative z-10">Home</span>
+                        <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                        <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    </a>
+                    <a href="#artists" class="nav-link text-white hover:text-neon-red transition-all duration-300 font-medium px-3 py-2 rounded-md relative overflow-hidden group">
+                        <span class="relative z-10">Artists</span>
+                        <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                        <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    </a>
+                    <a href="#gallery" class="nav-link text-white hover:text-neon-red transition-all duration-300 font-medium px-3 py-2 rounded-md relative overflow-hidden group">
+                        <span class="relative z-10">Gallery</span>
+                        <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                        <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    </a>
+                    <a href="#services" class="nav-link text-white hover:text-neon-red transition-all duration-300 font-medium px-3 py-2 rounded-md relative overflow-hidden group">
+                        <span class="relative z-10">Services</span>
+                        <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                        <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    </a>
                     
                     <!-- Clean Book Now Button -->
                     <a href="#booking" class="book-now-btn flex-shrink-0">
@@ -2832,14 +3022,61 @@
         <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800">
             <div class="w-full px-4 py-6 space-y-4">
                 <!-- Mobile Logo -->
-                <a href="#home" class="pb-4 border-b border-gray-700 hover:scale-105 transition-transform duration-300 flex justify-center">
-                    <img src="img/main-logo/logo-5.png" alt="Narshimha Tattoo Studio Logo" class="h-12 w-auto">
+                <a href="#home" class="pb-4 border-b border-gray-700 transition-all duration-300 flex flex-col items-center group">
+                    <!-- Head Photo -->
+                    <div class="mb-3">
+                        <img src="img/main-logo/narshimha-head.png" alt="Narshimha Head" class="h-18 w-auto rounded-lg group-hover:shadow-[inset_0_0_20px_rgba(255,7,58,0.4)] transition-all duration-300">
+                    </div>
+                    
+                    <!-- Text Logo -->
+                    <div class="flex flex-col items-center">
+                        <!-- Main Name -->
+                        <h1 class="text-lg font-bold text-white group-hover:text-neon-red transition-colors duration-300 font-serif">
+                            Narshimha
+                        </h1>
+                        
+                        <!-- Studio Text with Decorative Lines -->
+                        <div class="flex items-center justify-center mt-0.5">
+                            <!-- Left decorative line -->
+                            <div class="w-3 h-0.5 bg-neon-red transition-all duration-300"></div>
+                            
+                            <!-- Studio Text -->
+                            <span class="text-xs text-gray-400 group-hover:text-gray-300 transition-colors duration-300 font-sans uppercase tracking-wider mx-1">
+                                TATTOO STUDIO
+                            </span>
+                            
+                            <!-- Right decorative line -->
+                            <div class="w-3 h-0.5 bg-neon-red transition-all duration-300"></div>
+                        </div>
+                        
+                        <!-- Bottom Left Accent - Only this line extends on hover -->
+                        <div class="flex items-center mt-0.5">
+                            <div class="w-1 h-1 bg-neon-red rounded-full transition-transform duration-300"></div>
+                            <div class="w-2 h-0.5 bg-neon-red ml-1 group-hover:w-10 transition-all duration-700 ease-out"></div>
+                        </div>
+                    </div>
                 </a>
                 
-                <a href="#home" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Home</a>
-                <a href="#artists" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Artists</a>
-                <a href="#gallery" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Gallery</a>
-                <a href="#services" class="block text-white hover:text-neon-red transition-colors duration-300 font-medium py-2 px-3 rounded-md hover:bg-neon-red/10">Services</a>
+                <a href="#home" class="nav-link-mobile block text-white hover:text-neon-red transition-all duration-300 font-medium py-2 px-3 rounded-md relative overflow-hidden group">
+                    <span class="relative z-10">Home</span>
+                    <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                </a>
+                <a href="#artists" class="nav-link-mobile block text-white hover:text-neon-red transition-all duration-300 font-medium py-2 px-3 rounded-md relative overflow-hidden group">
+                    <span class="relative z-10">Artists</span>
+                    <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                </a>
+                <a href="#gallery" class="nav-link-mobile block text-white hover:text-neon-red transition-all duration-300 font-medium py-2 px-3 rounded-md relative overflow-hidden group">
+                    <span class="relative z-10">Gallery</span>
+                    <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                </a>
+                <a href="#services" class="nav-link-mobile block text-white hover:text-neon-red transition-all duration-300 font-medium py-2 px-3 rounded-md relative overflow-hidden group">
+                    <span class="relative z-10">Services</span>
+                    <div class="nav-link-bg absolute inset-0 bg-gradient-to-r from-neon-red/10 to-red-500/10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                    <div class="nav-link-border absolute bottom-0 left-0 w-full h-0.5 bg-neon-red scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></div>
+                </a>
                 
                 <!-- Mobile Book Now Button -->
                 <div class="pt-2">
@@ -3003,107 +3240,227 @@
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Artist 1 -->
-                <div class="artist-card bg-darker-gray rounded-lg overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer reveal" data-artist="1">
-                    <div class="relative">
-                        <div class="w-full h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center grayscale-hover relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Marcus Steel" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="absolute inset-0 bg-gradient-to-br from-neon-red/20 to-electric-blue/20 flex items-center justify-center" style="display: none;">
-                                <div class="text-center">
-                                    <i class="fas fa-user-circle text-6xl text-neon-red mb-2"></i>
-                                    <p class="text-white font-bold">Marcus Steel</p>
-                                    <p class="text-gray-300 text-sm">Blackwork & Realism</p>
-                                </div>
+                <div class="group relative bg-darker-gray rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-neon-red/20 cursor-pointer reveal block" onclick="viewArtistDetails(1)" data-artist-id="1">
+                    <!-- Image Container with Overlay -->
+                    <div class="relative w-full h-72 overflow-hidden">
+                        <img src="img/artist/6.png" alt="Lokesh verma" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" style="display: none;">
+                            <div class="text-center">
+                                <i class="fas fa-user-circle text-8xl text-neon-red mb-4"></i>
+                                <p class="text-white font-bold text-xl">Lokesh verma</p>
+                                <p class="text-gray-300">Blackwork & Realism</p>
                             </div>
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
-                            <div class="absolute bottom-4 left-4 text-white">
-                                <p class="text-sm">Specializes in</p>
-                                <p class="font-bold text-neon-red">Blackwork & Realism</p>
-                            </div>
+                        
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- Experience Badge -->
+                        <div class="absolute top-4 right-4 bg-neon-red text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            10+ Years
                         </div>
+                        
+                        <!-- Specialty Badge -->
+                        <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                            <i class="fas fa-palette mr-1"></i>
+                            Blackwork
+                        </div>
+                        
                     </div>
+                    
+                    <!-- Content -->
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Marcus Steel</h3>
-                        <p class="text-gray-400">10+ years experience</p>
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-bold text-white group-hover:text-neon-red transition-colors duration-300 w-48 truncate" style="font-size: 20px;" title="Lokesh verma">Lokesh verma</h3>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-400">4.9</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Specialties -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-neon-red/20 text-neon-red px-3 py-1 rounded-full text-xs font-medium">Blackwork</span>
+                            <span class="bg-electric-blue/20 text-electric-blue px-3 py-1 rounded-full text-xs font-medium">Realism</span>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-check mr-2 text-neon-red"></i>
+                            <span>500+ tattoos</span>
+                        </div>
                     </div>
+                    
+                    <!-- Decorative Border -->
+                    <div class="absolute inset-0 rounded-xl border border-transparent group-hover:border-neon-red/30 transition-colors duration-300 pointer-events-none"></div>
                 </div>
 
                 <!-- Artist 2 -->
-                <div class="artist-card bg-darker-gray rounded-lg overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer reveal" data-artist="2">
-                    <div class="relative">
-                        <div class="w-full h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center grayscale-hover relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1590246814883-57c511e75c8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Luna Rose" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="absolute inset-0 bg-gradient-to-br from-purple-glow/20 to-electric-blue/20 flex items-center justify-center" style="display: none;">
-                                <div class="text-center">
-                                    <i class="fas fa-palette text-6xl text-purple-glow mb-2"></i>
-                                    <p class="text-white font-bold">Luna Rose</p>
-                                    <p class="text-gray-300 text-sm">Watercolor & Floral</p>
-                                </div>
+                <div class="group relative bg-darker-gray rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-glow/20 cursor-pointer reveal block" onclick="viewArtistDetails(2)" data-artist-id="2">
+                    <!-- Image Container with Overlay -->
+                    <div class="relative w-full h-72 overflow-hidden">
+                        <img src="img/artist/2.webp" alt="Suresh Machu" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" style="display: none;">
+                            <div class="text-center">
+                                <i class="fas fa-palette text-8xl text-purple-glow mb-4"></i>
+                                <p class="text-white font-bold text-xl">Suresh Machu</p>
+                                <p class="text-gray-300">Watercolor & Floral</p>
                             </div>
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
-                            <div class="absolute bottom-4 left-4 text-white">
-                                <p class="text-sm">Specializes in</p>
-                                <p class="font-bold text-neon-red">Watercolor & Floral</p>
-                            </div>
+                        
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- Experience Badge -->
+                        <div class="absolute top-4 right-4 bg-purple-glow text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            8+ Years
                         </div>
+                        
+                        <!-- Specialty Badge -->
+                        <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                            <i class="fas fa-palette mr-1"></i>
+                            Watercolor
+                        </div>
+                        
                     </div>
+                    
+                    <!-- Content -->
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Luna Rose</h3>
-                        <p class="text-gray-400">8+ years experience</p>
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-bold text-white group-hover:text-purple-glow transition-colors duration-300 w-48 truncate" style="font-size: 20px;" title="Suresh Machu">Suresh Machu</h3>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-400">4.8</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Specialties -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-purple-glow/20 text-purple-glow px-3 py-1 rounded-full text-xs font-medium">Watercolor</span>
+                            <span class="bg-pink-500/20 text-pink-400 px-3 py-1 rounded-full text-xs font-medium">Floral</span>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-check mr-2 text-purple-glow"></i>
+                            <span>350+ tattoos</span>
+                        </div>
                     </div>
+                    
+                    <!-- Decorative Border -->
+                    <div class="absolute inset-0 rounded-xl border border-transparent group-hover:border-purple-glow/30 transition-colors duration-300 pointer-events-none"></div>
                 </div>
 
                 <!-- Artist 3 -->
-                <div class="artist-card bg-darker-gray rounded-lg overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer reveal" data-artist="3">
-                    <div class="relative">
-                        <div class="w-full h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center grayscale-hover relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Jake Thunder" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-neon-red/20 flex items-center justify-center" style="display: none;">
-                                <div class="text-center">
-                                    <i class="fas fa-bolt text-6xl text-yellow-500 mb-2"></i>
-                                    <p class="text-white font-bold">Jake Thunder</p>
-                                    <p class="text-gray-300 text-sm">Traditional & Neo-Trad</p>
-                                </div>
+                <div class="group relative bg-darker-gray rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-yellow-500/20 cursor-pointer reveal block" onclick="viewArtistDetails(3)" data-artist-id="3">
+                    <!-- Image Container with Overlay -->
+                    <div class="relative w-full h-72 overflow-hidden">
+                        <img src="img/artist/5.jpg" alt="Buta Singh Rathor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" style="display: none;">
+                            <div class="text-center">
+                                <i class="fas fa-bolt text-8xl text-yellow-500 mb-4"></i>
+                                <p class="text-white font-bold text-xl">Buta Singh Rathor</p>
+                                <p class="text-gray-300">Traditional & Neo-Trad</p>
                             </div>
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
-                            <div class="absolute bottom-4 left-4 text-white">
-                                <p class="text-sm">Specializes in</p>
-                                <p class="font-bold text-neon-red">Traditional & Neo-Trad</p>
-                            </div>
+                        
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- Experience Badge -->
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            12+ Years
                         </div>
+                        
+                        <!-- Specialty Badge -->
+                        <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                            <i class="fas fa-anchor mr-1"></i>
+                            Traditional
+                        </div>
+                        
                     </div>
+                    
+                    <!-- Content -->
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Jake Thunder</h3>
-                        <p class="text-gray-400">12+ years experience</p>
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-bold text-white group-hover:text-yellow-500 transition-colors duration-300 w-48 truncate" style="font-size: 20px;" title="Buta Singh Rathor">Buta Singh Rathor</h3>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-400">4.9</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Specialties -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded-full text-xs font-medium">Traditional</span>
+                            <span class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-xs font-medium">Neo-Trad</span>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-check mr-2 text-yellow-500"></i>
+                            <span>800+ tattoos</span>
+                        </div>
                     </div>
+                    
+                    <!-- Decorative Border -->
+                    <div class="absolute inset-0 rounded-xl border border-transparent group-hover:border-yellow-500/30 transition-colors duration-300 pointer-events-none"></div>
                 </div>
 
                 <!-- Artist 4 -->
-                <div class="artist-card bg-darker-gray rounded-lg overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer reveal" data-artist="4">
-                    <div class="relative">
-                        <div class="w-full h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center grayscale-hover relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Aria Ink" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/20 to-purple-glow/20 flex items-center justify-center" style="display: none;">
-                                <div class="text-center">
-                                    <i class="fas fa-pen-nib text-6xl text-electric-blue mb-2"></i>
-                                    <p class="text-white font-bold">Aria Ink</p>
-                                    <p class="text-gray-300 text-sm">Minimalist & Geometric</p>
-                                </div>
+                <div class="group relative bg-darker-gray rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-electric-blue/20 cursor-pointer reveal block" onclick="viewArtistDetails(4)" data-artist-id="4">
+                    <!-- Image Container with Overlay -->
+                    <div class="relative w-full h-72 overflow-hidden">
+                        <img src="img/artist/4.png" alt="Zaheer Chhatriwala" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" style="display: none;">
+                            <div class="text-center">
+                                <i class="fas fa-pen-nib text-8xl text-electric-blue mb-4"></i>
+                                <p class="text-white font-bold text-xl">Zaheer Chhatriwala</p>
+                                <p class="text-gray-300">Minimalist & Geometric</p>
                             </div>
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
-                            <div class="absolute bottom-4 left-4 text-white">
-                                <p class="text-sm">Specializes in</p>
-                                <p class="font-bold text-neon-red">Minimalist & Geometric</p>
-                            </div>
+                        
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <!-- Experience Badge -->
+                        <div class="absolute top-4 right-4 bg-electric-blue text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            6+ Years
                         </div>
+                        
+                        <!-- Specialty Badge -->
+                        <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                            <i class="fas fa-minus mr-1"></i>
+                            Minimalist
+                        </div>
+                        
                     </div>
+                    
+                    <!-- Content -->
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Aria Ink</h3>
-                        <p class="text-gray-400">6+ years experience</p>
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-bold text-white group-hover:text-electric-blue transition-colors duration-300 w-48 truncate" style="font-size: 20px;" title="Zaheer Chhatriwala">Zaheer Chhatriwala</h3>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-400">4.7</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Specialties -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-electric-blue/20 text-electric-blue px-3 py-1 rounded-full text-xs font-medium">Minimalist</span>
+                            <span class="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-xs font-medium">Geometric</span>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-check mr-2 text-electric-blue"></i>
+                            <span>200+ tattoos</span>
+                        </div>
                     </div>
+                    
+                    <!-- Decorative Border -->
+                    <div class="absolute inset-0 rounded-xl border border-transparent group-hover:border-electric-blue/30 transition-colors duration-300 pointer-events-none"></div>
                 </div>
             </div>
         </div>
@@ -3120,7 +3477,7 @@
             <!-- Filter Tabs -->
             <div class="flex justify-center mb-12 reveal">
                 <div class="bg-dark-gray rounded-lg p-2 flex space-x-2">
-                    <button class="filter-btn active px-6 py-3 rounded-lg font-semibold transition-all" data-filter="all">All</button>
+                    <a href="gallery.html" class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all inline-block text-gray-400 hover:text-white">All</a>
                     <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all" data-filter="blackwork">Blackwork</button>
                     <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all" data-filter="realism">Realism</button>
                     <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all" data-filter="minimal">Minimal</button>
@@ -3515,10 +3872,10 @@
                                 <div class="relative">
                                     <select name="artist" class="modern-select w-full px-4 py-3 bg-darker-gray/80 border border-gray-600/50 rounded-xl focus:border-neon-red focus:ring-2 focus:ring-neon-red/20 transition-all duration-300 text-white appearance-none">
                                         <option value="">Any Available</option>
-                                        <option value="marcus">Marcus Steel</option>
-                                        <option value="luna">Luna Rose</option>
-                                        <option value="jake">Jake Thunder</option>
-                                        <option value="aria">Aria Ink</option>
+                                        <option value="marcus">Lokesh verma</option>
+                                        <option value="luna">Suresh Machu</option>
+                                        <option value="jake">Buta Singh Rathor</option>
+                                        <option value="Zaheer">Zaheer Chhatriwala</option>
                                     </select>
                                     <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
                                 </div>
@@ -4289,9 +4646,9 @@
                 const navbar = document.getElementById('navbar');
                 if (navbar) {
                     if (window.scrollY > 100) {
-                        navbar.classList.add('bg-darker-gray', 'bg-opacity-95');
+                        navbar.classList.add('bg-dark-gray', 'bg-opacity-95');
                     } else {
-                        navbar.classList.remove('bg-darker-gray', 'bg-opacity-95');
+                        navbar.classList.remove('bg-dark-gray', 'bg-opacity-95');
                     }
                 }
             });
@@ -4626,14 +4983,14 @@
             if (galleryGrid) {
                 // Sample gallery images with fallbacks
                 const galleryImages = [
-                    { src: 'https://picsum.photos/400/300?random=1', category: 'blackwork', fallback: 'blackwork-1' },
-                    { src: 'https://picsum.photos/400/300?random=2', category: 'realism', fallback: 'realism-1' },
-                    { src: 'https://picsum.photos/400/300?random=3', category: 'minimal', fallback: 'minimal-1' },
-                    { src: 'https://picsum.photos/400/300?random=4', category: 'traditional', fallback: 'traditional-1' },
-                    { src: 'https://picsum.photos/400/300?random=5', category: 'blackwork', fallback: 'blackwork-2' },
-                    { src: 'https://picsum.photos/400/300?random=6', category: 'realism', fallback: 'realism-2' },
-                    { src: 'https://picsum.photos/400/300?random=7', category: 'minimal', fallback: 'minimal-2' },
-                    { src: 'https://picsum.photos/400/300?random=8', category: 'traditional', fallback: 'traditional-2' }
+                    { src: 'img/blackwork1.png', category: 'blackwork', fallback: 'blackwork-1' },
+                    { src: 'img/realism1.png', category: 'realism', fallback: 'realism-1' },
+                    { src: 'img/minimalist1.png', category: 'minimal', fallback: 'minimal-1' },
+                    { src: 'img/traditional1.png', category: 'traditional', fallback: 'traditional-1' },
+                    { src: 'img/blackwork2.png', category: 'blackwork', fallback: 'blackwork-2' },
+                    { src: 'img/realism2.png', category: 'realism', fallback: 'realism-2' },
+                    { src: 'img/minimalist2.png', category: 'minimal', fallback: 'minimal-2' },
+                    { src: 'img/traditional2.png', category: 'traditional', fallback: 'traditional-2' }
                 ];
                 
                 // Fallback placeholder generator
@@ -4661,20 +5018,37 @@
                     `;
                 }
                 
+                // Serial number system for main gallery
+                function generateMainGallerySerialNumber(category, index) {
+                    const categoryPrefix = {
+                        'blackwork': 'BW',
+                        'realism': 'RL',
+                        'minimal': 'MN',
+                        'traditional': 'TR'
+                    };
+                    const prefix = categoryPrefix[category] || 'TN';
+                    return `${prefix}${String(index + 1).padStart(2, '0')}`;
+                }
+
                 function displayGallery(filter = 'all') {
                     const filteredImages = filter === 'all' ? galleryImages : galleryImages.filter(img => img.category === filter);
                     
-                    galleryGrid.innerHTML = filteredImages.map(img => `
-                        <div class="gallery-item cursor-pointer hover:scale-105 transition-all duration-300">
-                            <div class="relative overflow-hidden rounded-lg">
-                                <img src="${img.src}" alt="${img.category} tattoo work" class="w-full h-48 object-cover" 
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="w-full h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" style="display: none;">
-                                    ${createPlaceholder(img.category, img.fallback)}
+                    galleryGrid.innerHTML = filteredImages.map((img, index) => {
+                        const serialNumber = generateMainGallerySerialNumber(img.category, index);
+                        
+                        return `
+                            <div class="gallery-item cursor-pointer hover:scale-105 transition-all duration-300" data-main-image-id="${img.category}_${index}">
+                                <div class="relative overflow-hidden rounded-lg">
+                                    <div class="serial-number" title="Serial Number: ${serialNumber}">${serialNumber}</div>
+                                    <img src="${img.src}" alt="${img.category} tattoo work" class="w-full h-48 object-cover" 
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="w-full h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center" style="display: none;">
+                                        ${createPlaceholder(img.category, img.fallback)}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 }
                 
                 // Initialize gallery
@@ -4682,8 +5056,17 @@
                 
                 // Filter functionality
                 filterBtns.forEach(btn => {
+                    // Skip the "All" button since it's a link to gallery.html
+                    if (btn.href && btn.href.includes('gallery.html')) {
+                        return;
+                    }
+                    
                     btn.addEventListener('click', () => {
                         filterBtns.forEach(b => {
+                            // Skip the "All" button from active state changes
+                            if (b.href && b.href.includes('gallery.html')) {
+                                return;
+                            }
                             b.classList.remove('active', 'bg-neon-red', 'text-white');
                             b.classList.add('text-gray-400');
                         });
@@ -6091,8 +6474,46 @@
                 el.classList.remove('loading-placeholder');
             });
         });
+
+        // Artist Details Function
+        window.viewArtistDetails = function(artistId) {
+            window.location.href = `artist-details.php?id=${artistId}`;
+        };
+
+        // Scroll to Top Button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopBtn) {
+                // Show/hide scroll to top button based on scroll position
+                window.addEventListener('scroll', () => {
+                    // Calculate the height of hero section to determine when to show button
+                    const heroSection = document.querySelector('#home');
+                    const showButtonAfter = heroSection ? heroSection.offsetHeight : 800;
+                    
+                    if (window.scrollY > showButtonAfter) {
+                        scrollToTopBtn.classList.add('visible');
+                    } else {
+                        scrollToTopBtn.classList.remove('visible');
+                    }
+                });
+                
+                // Smooth scroll to top when button is clicked
+                scrollToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
     </script>
     
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="scroll-to-top-btn" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
     <!-- Image Management Script -->
     <script src="images.js"></script>
 </body>

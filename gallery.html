@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Narshimha Tattoo Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-red: #ff3333;
+            --electric-blue: #00d4ff;
+            --purple-glow: #8b5cf6;
+            --dark-gray: #1a1a1a;
+            --darker-gray: #0f0f0f;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker-gray);
+            color: white;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--neon-red), var(--electric-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            height: 280px;
+            background: var(--dark-gray);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 51, 51, 0.3);
+        }
+        
+        .gallery-item img {
+            transition: transform 0.6s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .error-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--dark-gray), #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--neon-red), #ff5555);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 51, 51, 0.4);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+            transition: all 0.3s ease;
+        }
+        
+        .secondary-button:hover {
+            background: var(--neon-red);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 51, 51, 0.3);
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: var(--neon-red);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
+        }
+        
+        .navbar {
+            backdrop-filter: blur(20px);
+            background: rgba(26, 26, 26, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-red), var(--electric-blue));
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+            padding: 20px;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 80vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px 20px 20px;
+        }
+        
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10001;
+            font-size: 18px;
+        }
+        
+        .lightbox-close:hover {
+            background: var(--neon-red);
+            transform: scale(1.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        
+        .serial-number {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, var(--neon-red), #ff5555);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.3);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+        
+        .serial-number:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.5);
+        }
+        
+        .popularity-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, var(--neon-red), #ff5555);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 51, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px); 
+            }
+            50% { 
+                transform: translateY(-8px); 
+            }
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-red), #ff5555);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(255, 51, 51, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .scroll-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top-btn:hover {
+            animation-play-state: paused;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(255, 51, 51, 0.5);
+            background: linear-gradient(135deg, #ff4444, var(--neon-red));
+        }
+        
+        .scroll-to-top-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        .scroll-to-top-btn i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        
+        /* Gallery Responsive */
+        @media (max-width: 768px) {
+            .gallery-item {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-item {
+                height: 220px;
+            }
+        }
+        
+        /* Lightbox Responsive */
+        @media (max-width: 768px) {
+            .lightbox-content {
+                max-width: 95vw;
+                max-height: 70vh;
+                padding: 50px 15px 15px 15px;
+            }
+            
+            .lightbox-close {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .lightbox-content {
+                max-width: 98vw;
+                max-height: 65vh;
+                padding: 40px 10px 10px 10px;
+            }
+            
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .scroll-to-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Bar -->
+    <div class="loading-bar" id="loading-bar"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="relative">
+                        <img src="img/main-logo/narshimha-head.png" alt="Narshimha Head" class="h-12 w-auto rounded-lg group-hover:shadow-[inset_0_0_20px_rgba(255,7,58,0.4)] transition-all duration-300">
+                    </div>
+                    <div class="text-left">
+                        <h1 class="text-xl font-bold text-white">Narshimha</h1>
+                        <p class="text-sm text-gray-400">Tattoo Studio</p>
+                    </div>
+                </a>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-white hover:text-neon-red transition-colors duration-300">Home</a>
+                    <a href="index.html#artists" class="text-white hover:text-neon-red transition-colors duration-300">Artists</a>
+                    <a href="gallery.html" class="text-neon-red font-semibold">Gallery</a>
+                    <a href="index.html#services" class="text-white hover:text-neon-red transition-colors duration-300">Services</a>
+                    <a href="index.html#booking" class="cta-button px-6 py-2 rounded-lg text-white font-semibold">
+                        <i class="fas fa-calendar-plus mr-2"></i>
+                        Book Now
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="hidden md:hidden pb-4" id="mobile-menu">
+                <div class="space-y-4">
+                    <a href="index.html" class="block text-white hover:text-neon-red transition-colors duration-300">Home</a>
+                    <a href="index.html#artists" class="block text-white hover:text-neon-red transition-colors duration-300">Artists</a>
+                    <a href="gallery.html" class="block text-neon-red font-semibold">Gallery</a>
+                    <a href="index.html#services" class="block text-white hover:text-neon-red transition-colors duration-300">Services</a>
+                    <a href="index.html#booking" class="block cta-button px-6 py-2 rounded-lg text-white font-semibold text-center">
+                        <i class="fas fa-calendar-plus mr-2"></i>
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-10">
+        <!-- Hero Section -->
+        <section class="py-20 text-center">
+            <div class="container mx-auto px-6">
+                <div class="fade-in">
+                    <h1 class="text-6xl md:text-7xl font-bold mb-6">
+                        Our <span class="gradient-text">Gallery</span>
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                        Explore our extensive collection of tattoo artistry. From minimalist designs to complex masterpieces, each piece tells a unique story.
+                    </p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                        <a href="tel:+1234567890" class="cta-button px-8 py-4 rounded-lg text-white font-bold text-lg inline-flex items-center justify-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            Call Now
+                        </a>
+                        <a href="index.html#booking" class="secondary-button px-8 py-4 rounded-lg font-bold text-lg inline-flex items-center justify-center">
+                            <i class="fas fa-calendar-check mr-3"></i>
+                            Book Appointment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Filter Section -->
+        <section class="py-8">
+            <div class="container mx-auto px-6">
+                <div class="flex justify-center mb-8 fade-in stagger-1">
+                    <div class="bg-dark-gray rounded-lg p-2 flex flex-wrap gap-2">
+                        <button class="filter-btn active px-6 py-3 rounded-lg font-semibold transition-all" data-filter="all">
+                            All
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all text-gray-400 hover:text-white" data-filter="blackwork">
+                            Blackwork
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all text-gray-400 hover:text-white" data-filter="realism">
+                            Realism
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all text-gray-400 hover:text-white" data-filter="minimal">
+                            Minimal
+                        </button>
+                        <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all text-gray-400 hover:text-white" data-filter="traditional">
+                            Traditional
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Grid -->
+        <section class="py-12">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gallery-grid">
+                    <!-- Gallery items will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA Section -->
+        <section class="py-20 bg-gradient-to-r from-dark-gray to-darker-gray">
+            <div class="container mx-auto px-6 text-center">
+                <div class="fade-in">
+                    <h2 class="text-4xl font-bold mb-6">Ready to Create Your Masterpiece?</h2>
+                    <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                        Let our talented artists bring your vision to life. Book your consultation today and start your tattoo journey.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="tel:+1234567890" class="cta-button px-8 py-4 rounded-lg text-white font-bold text-lg inline-flex items-center justify-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            Call Now
+                        </a>
+                        <a href="index.html#booking" class="secondary-button px-8 py-4 rounded-lg font-bold text-lg inline-flex items-center justify-center">
+                            <i class="fas fa-calendar-check mr-3"></i>
+                            Book Appointment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="scroll-to-top-btn" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="">
+            <button class="lightbox-close" id="lightbox-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-darker-gray py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="img/main-logo/narshimha-head.png" alt="Narshimha Head" class="h-12 w-auto rounded-lg">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Narshimha</h3>
+                            <p class="text-sm text-gray-400">Tattoo Studio</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">Creating timeless art on skin with passion and precision.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-neon-red transition-colors">Home</a></li>
+                        <li><a href="index.html#artists" class="text-gray-400 hover:text-neon-red transition-colors">Artists</a></li>
+                        <li><a href="gallery.html" class="text-gray-400 hover:text-neon-red transition-colors">Gallery</a></li>
+                        <li><a href="index.html#services" class="text-gray-400 hover:text-neon-red transition-colors">Services</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p><i class="fas fa-phone mr-2"></i> +1 (555) 123-TATT</p>
+                        <p><i class="fas fa-envelope mr-2"></i> info@narshimhatattoo.com</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i> 123 Art Street, City</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Narshimha Tattoo Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Gallery data with actual image paths and unique IDs
+        const galleryImages = [
+            // Blackwork images
+            { id: 'bw1', src: 'img/blackwork1.png', category: 'blackwork', alt: 'Blackwork tattoo design', name: 'Geometric Blackwork' },
+            { id: 'bw2', src: 'img/blackwork2.png', category: 'blackwork', alt: 'Blackwork tattoo design', name: 'Abstract Blackwork' },
+            
+            // Minimalist images
+            { id: 'min1', src: 'img/minimalist1.png', category: 'minimal', alt: 'Minimalist tattoo design', name: 'Minimal Line Art' },
+            { id: 'min2', src: 'img/minimalist2.png', category: 'minimal', alt: 'Minimalist tattoo design', name: 'Simple Geometry' },
+            { id: 'min3', src: 'img/minimalist3.png', category: 'minimal', alt: 'Minimalist tattoo design', name: 'Clean Minimalist' },
+            
+            // Realism images
+            { id: 'real1', src: 'img/realism1.png', category: 'realism', alt: 'Realism tattoo design', name: 'Portrait Realism' },
+            { id: 'real2', src: 'img/realism2.png', category: 'realism', alt: 'Realism tattoo design', name: 'Nature Realism' },
+            
+            // Traditional images
+            { id: 'trad1', src: 'img/Traditional1.png', category: 'traditional', alt: 'Traditional tattoo design', name: 'Classic Traditional' },
+            { id: 'trad2', src: 'img/Traditional2.png', category: 'traditional', alt: 'Traditional tattoo design', name: 'Vintage Traditional' },
+            { id: 'trad3', src: 'img/traditional 3.png', category: 'traditional', alt: 'Traditional tattoo design', name: 'Bold Traditional' },
+            
+            // Artist images (can be used as gallery items too)
+            { id: 'art1', src: 'img/artist/1.jpeg', category: 'blackwork', alt: 'Artist portfolio work', name: 'Artist Showcase 1' },
+            { id: 'art2', src: 'img/artist/2.webp', category: 'realism', alt: 'Artist portfolio work', name: 'Artist Showcase 2' },
+            { id: 'art3', src: 'img/artist/3.jpg', category: 'minimal', alt: 'Artist portfolio work', name: 'Artist Showcase 3' },
+            { id: 'art4', src: 'img/artist/4.png', category: 'traditional', alt: 'Artist portfolio work', name: 'Artist Showcase 4' },
+            { id: 'art5', src: 'img/artist/5.jpg', category: 'blackwork', alt: 'Artist portfolio work', name: 'Artist Showcase 5' },
+            { id: 'art6', src: 'img/artist/6.png', category: 'realism', alt: 'Artist portfolio work', name: 'Artist Showcase 6' }
+        ];
+
+        // DOM elements
+        const galleryGrid = document.getElementById('gallery-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Loading bar animation
+        function updateLoadingBar(progress) {
+            const loadingBar = document.getElementById('loading-bar');
+            loadingBar.style.width = progress + '%';
+        }
+
+        // Initialize loading
+        updateLoadingBar(20);
+
+        // Serial number system
+        function generateSerialNumber(category, index) {
+            const categoryPrefix = {
+                'blackwork': 'BW',
+                'realism': 'RL',
+                'minimal': 'MN',
+                'traditional': 'TR',
+                'artist': 'AR'
+            };
+            const prefix = categoryPrefix[category] || 'TN';
+            return `${prefix}${String(index + 1).padStart(3, '0')}`;
+        }
+
+
+        // Display gallery function
+        function displayGallery(filter = 'all') {
+            const filteredImages = filter === 'all' ? galleryImages : galleryImages.filter(img => img.category === filter);
+            
+            galleryGrid.innerHTML = filteredImages.map((img, index) => {
+                const serialNumber = generateSerialNumber(img.category, index);
+                
+                return `
+                    <div class="gallery-item fade-in stagger-${(index % 4) + 1}" data-src="${img.src}" data-image-id="${img.id}">
+                        <div class="serial-number" title="Serial Number: ${serialNumber}">${serialNumber}</div>
+                        <img src="${img.src}" alt="${img.alt}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="error-placeholder" style="display: none;">
+                            <div class="text-center">
+                                <i class="fas fa-image text-4xl text-neon-red mb-2"></i>
+                                <p class="text-white font-semibold">${img.category}</p>
+                                <p class="text-gray-400 text-sm">${serialNumber}</p>
+                            </div>
+                        </div>
+                        <div class="gallery-overlay"></div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Add click listeners for lightbox
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const imgSrc = item.dataset.src;
+                    openLightbox(imgSrc);
+                });
+            });
+            
+            updateLoadingBar(80);
+        }
+
+        // Open lightbox
+        function openLightbox(src) {
+            lightboxImage.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Filter button functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-neon-red', 'text-white');
+                    b.classList.add('text-gray-400', 'hover:text-white');
+                });
+                btn.classList.add('active', 'bg-neon-red', 'text-white');
+                btn.classList.remove('text-gray-400', 'hover:text-white');
+                
+                // Filter gallery
+                displayGallery(btn.dataset.filter);
+            });
+        });
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Lightbox event listeners
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+
+        // Initialize gallery
+        displayGallery();
+        updateLoadingBar(100);
+
+        // Hide loading bar after a short delay
+        setTimeout(() => {
+            document.getElementById('loading-bar').style.opacity = '0';
+        }, 500);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(26, 26, 26, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(26, 26, 26, 0.8)';
+            }
+        });
+
+        // Scroll to Top Button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            
+            if (scrollToTopBtn) {
+                // Show/hide scroll to top button based on scroll position
+                window.addEventListener('scroll', () => {
+                    // Calculate the height of hero section + navbar to determine when to show button
+                    const heroSection = document.querySelector('section.py-20.text-center');
+                    const navbar = document.querySelector('.navbar');
+                    const showButtonAfter = (heroSection ? heroSection.offsetHeight : 600) + (navbar ? navbar.offsetHeight : 80);
+                    
+                    if (window.scrollY > showButtonAfter) {
+                        scrollToTopBtn.classList.add('visible');
+                    } else {
+                        scrollToTopBtn.classList.remove('visible');
+                    }
+                });
+                
+                // Smooth scroll to top when button is clicked
+                scrollToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
