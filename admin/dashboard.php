@@ -1,6 +1,19 @@
+<script>
+window.history.pushState(null, "", window.location.href);
+window.onpopstate = function() {
+  window.history.pushState(null, "", window.location.href);
+};
+</script>
+
 <?php
 require_once 'auth.php';
 AdminAuth::requireAuth();
+if (!AdminAuth::isLoggedIn()) {
+    header('Location: login.php');
+    exit();
+}
+
+
 
 require_once '../config/database.php';
 
@@ -22,16 +35,33 @@ $stats['pending_bookings'] = $result->fetch_assoc()['count'];
 $result = $conn->query("SELECT COUNT(*) as count FROM bookings WHERE status = 'confirmed'");
 $stats['confirmed_bookings'] = $result->fetch_assoc()['count'];
 
+// Completed bookings
+$result = $conn->query("SELECT COUNT(*) as count FROM bookings WHERE status = 'completed'");
+$stats['completed_bookings'] = $result->fetch_assoc()['count'];
+
 // Total services
 $result = $conn->query("SELECT COUNT(*) as count FROM services WHERE is_active = 1");
 $stats['total_services'] = $result->fetch_assoc()['count'];
 
+// Total artists
+$result = $conn->query("SELECT COUNT(*) as count FROM artists WHERE is_active = 1");
+$stats['total_artists'] = $result->fetch_assoc()['count'];
+
+// Total testimonials
+$result = $conn->query("SELECT COUNT(*) as count FROM testimonials WHERE is_approved = 1");
+$stats['total_testimonials'] = $result->fetch_assoc()['count'];
+
+// Total gallery images
+$result = $conn->query("SELECT COUNT(*) as count FROM gallery_images WHERE is_active = 1");
+$stats['total_gallery_images'] = $result->fetch_assoc()['count'];
+
 // Recent bookings
 $recent_bookings = [];
 $result = $conn->query("
-    SELECT b.*, a.name as artist_name 
+    SELECT b.*, a.name as artist_name, s.name as service_name
     FROM bookings b 
     LEFT JOIN artists a ON b.preferred_artist_id = a.id 
+    LEFT JOIN services s ON b.service_id = s.id
     ORDER BY b.created_at DESC 
     LIMIT 10
 ");
@@ -49,6 +79,64 @@ $result = $conn->query("
 ");
 while ($row = $result->fetch_assoc()) {
     $status_stats[] = $row;
+}
+
+// Monthly booking trends (last 6 months)
+$monthly_stats = [];
+$result = $conn->query("
+    SELECT 
+        DATE_FORMAT(created_at, '%Y-%m') as month,
+        COUNT(*) as count
+    FROM bookings 
+    WHERE created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+    GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+    ORDER BY month ASC
+");
+while ($row = $result->fetch_assoc()) {
+    $monthly_stats[] = $row;
+}
+
+// Popular services
+$popular_services = [];
+$result = $conn->query("
+    SELECT s.name, COUNT(b.id) as booking_count
+    FROM services s
+    LEFT JOIN bookings b ON s.id = b.service_id
+    WHERE s.is_active = 1
+    GROUP BY s.id, s.name
+    ORDER BY booking_count DESC
+    LIMIT 5
+");
+while ($row = $result->fetch_assoc()) {
+    $popular_services[] = $row;
+}
+
+// Artist performance
+$artist_performance = [];
+$result = $conn->query("
+    SELECT a.name, COUNT(b.id) as booking_count, AVG(t.rating) as avg_rating
+    FROM artists a
+    LEFT JOIN bookings b ON a.id = b.preferred_artist_id
+    LEFT JOIN testimonials t ON a.name = t.client_name
+    WHERE a.is_active = 1
+    GROUP BY a.id, a.name
+    ORDER BY booking_count DESC
+    LIMIT 5
+");
+while ($row = $result->fetch_assoc()) {
+    $artist_performance[] = $row;
+}
+
+// Recent testimonials
+$recent_testimonials = [];
+$result = $conn->query("
+    SELECT * FROM testimonials 
+    WHERE is_approved = 1 
+    ORDER BY created_at DESC 
+    LIMIT 5
+");
+while ($row = $result->fetch_assoc()) {
+    $recent_testimonials[] = $row;
 }
 ?>
 <!DOCTYPE html>
@@ -157,6 +245,18 @@ while ($row = $result->fetch_assoc()) {
                                 <a href="artists.php" class="text-gray-300 hover:bg-gray-700/50 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
                                     <i class="fas fa-users mr-2"></i>Artists
                                 </a>
+                                <a href="content.php" class="text-gray-300 hover:bg-gray-700/50 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    <i class="fas fa-edit mr-2"></i>Content
+                                </a>
+                                <a href="media.php" class="text-gray-300 hover:bg-gray-700/50 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    <i class="fas fa-images mr-2"></i>Media
+                                </a>
+                                <a href="analytics.php" class="text-gray-300 hover:bg-gray-700/50 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    <i class="fas fa-chart-line mr-2"></i>Analytics
+                                </a>
+                                <a href="signup.php" class="text-gray-300 hover:bg-gray-700/50 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    <i class="fas fa-user-plus mr-2"></i>New Admin
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -251,6 +351,22 @@ while ($row = $result->fetch_assoc()) {
                         </div>
                     </div>
 
+                    <!-- Completed Bookings -->
+                    <div class="glass-morphism rounded-xl p-6 hover-lift group">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-check-circle text-white text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wide">Completed</p>
+                                <p class="text-3xl font-bold text-white font-orbitron"><?php echo $stats['completed_bookings']; ?></p>
+                                <p class="text-xs text-purple-400 mt-1">Finished</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Total Services -->
                     <div class="glass-morphism rounded-xl p-6 hover-lift group">
                         <div class="flex items-center">
@@ -263,6 +379,54 @@ while ($row = $result->fetch_assoc()) {
                                 <p class="text-sm font-medium text-gray-400 uppercase tracking-wide">Active Services</p>
                                 <p class="text-3xl font-bold text-white font-orbitron"><?php echo $stats['total_services']; ?></p>
                                 <p class="text-xs text-neon-red mt-1">Available now</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Artists -->
+                    <div class="glass-morphism rounded-xl p-6 hover-lift group">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-users text-white text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wide">Active Artists</p>
+                                <p class="text-3xl font-bold text-white font-orbitron"><?php echo $stats['total_artists']; ?></p>
+                                <p class="text-xs text-cyan-400 mt-1">Team members</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Testimonials -->
+                    <div class="glass-morphism rounded-xl p-6 hover-lift group">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-star text-white text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wide">Testimonials</p>
+                                <p class="text-3xl font-bold text-white font-orbitron"><?php echo $stats['total_testimonials']; ?></p>
+                                <p class="text-xs text-amber-400 mt-1">Approved reviews</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Images -->
+                    <div class="glass-morphism rounded-xl p-6 hover-lift group">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-images text-white text-lg"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-400 uppercase tracking-wide">Gallery Images</p>
+                                <p class="text-3xl font-bold text-white font-orbitron"><?php echo $stats['total_gallery_images']; ?></p>
+                                <p class="text-xs text-emerald-400 mt-1">Portfolio items</p>
                             </div>
                         </div>
                     </div>
@@ -335,11 +499,88 @@ while ($row = $result->fetch_assoc()) {
                 </div>
             </div>
 
+            <!-- Analytics and Reports -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Monthly Trends Chart -->
+                    <div class="bg-dark-gray rounded-lg p-6">
+                        <h3 class="text-lg font-medium text-white mb-4">Monthly Booking Trends</h3>
+                        <canvas id="monthlyTrendsChart" width="400" height="200"></canvas>
+                    </div>
+
+                    <!-- Popular Services -->
+                    <div class="bg-dark-gray rounded-lg p-6">
+                        <h3 class="text-lg font-medium text-white mb-4">Popular Services</h3>
+                        <div class="space-y-3">
+                            <?php foreach ($popular_services as $service): ?>
+                                <div class="flex items-center justify-between p-3 bg-darker-gray rounded-lg">
+                                    <div>
+                                        <p class="text-white font-medium"><?php echo htmlspecialchars($service['name']); ?></p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-neon-red font-semibold"><?php echo $service['booking_count']; ?></span>
+                                        <p class="text-gray-400 text-xs">bookings</p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist Performance -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="bg-dark-gray rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-white mb-4">Artist Performance</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <?php foreach ($artist_performance as $artist): ?>
+                            <div class="bg-darker-gray rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-white font-medium"><?php echo htmlspecialchars($artist['name']); ?></h4>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                        <span class="text-yellow-400 font-semibold"><?php echo number_format($artist['avg_rating'], 1); ?></span>
+                                    </div>
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    <p><?php echo $artist['booking_count']; ?> bookings</p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Testimonials -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="bg-dark-gray rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-white mb-4">Recent Testimonials</h3>
+                    <div class="space-y-4">
+                        <?php foreach ($recent_testimonials as $testimonial): ?>
+                            <div class="bg-darker-gray rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h4 class="text-white font-medium"><?php echo htmlspecialchars($testimonial['client_name']); ?></h4>
+                                        <div class="flex items-center mt-1">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <i class="fas fa-star text-yellow-400 text-sm <?php echo $i <= $testimonial['rating'] ? '' : 'opacity-30'; ?>"></i>
+                                            <?php endfor; ?>
+                                        </div>
+                                    </div>
+                                    <span class="text-gray-400 text-sm"><?php echo date('M j, Y', strtotime($testimonial['created_at'])); ?></span>
+                                </div>
+                                <p class="text-gray-300 text-sm"><?php echo htmlspecialchars(substr($testimonial['testimonial_text'], 0, 100)) . (strlen($testimonial['testimonial_text']) > 100 ? '...' : ''); ?></p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
             <!-- Quick Actions -->
             <div class="px-4 py-6 sm:px-0">
                 <div class="bg-dark-gray rounded-lg p-6">
                     <h3 class="text-lg font-medium text-white mb-4">Quick Actions</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <a href="bookings.php?status=pending" class="bg-yellow-900 hover:bg-yellow-800 text-yellow-100 p-4 rounded-lg text-center transition-colors">
                             <i class="fas fa-clock text-2xl mb-2"></i>
                             <p class="font-medium">Review Pending Bookings</p>
@@ -355,11 +596,102 @@ while ($row = $result->fetch_assoc()) {
                             <p class="font-medium">Manage Artists</p>
                             <p class="text-sm opacity-75">Update profiles</p>
                         </a>
+                        <a href="content.php" class="bg-purple-900 hover:bg-purple-800 text-purple-100 p-4 rounded-lg text-center transition-colors">
+                            <i class="fas fa-edit text-2xl mb-2"></i>
+                            <p class="font-medium">Update Content</p>
+                            <p class="text-sm opacity-75">Website content</p>
+                        </a>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        // Monthly Trends Chart
+        const monthlyData = <?php echo json_encode($monthly_stats); ?>;
+        const monthlyLabels = monthlyData.map(item => {
+            const date = new Date(item.month + '-01');
+            return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        });
+        const monthlyCounts = monthlyData.map(item => parseInt(item.count));
+
+        const monthlyCtx = document.getElementById('monthlyTrendsChart').getContext('2d');
+        new Chart(monthlyCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyLabels,
+                datasets: [{
+                    label: 'Bookings',
+                    data: monthlyCounts,
+                    borderColor: '#ff073a',
+                    backgroundColor: 'rgba(255, 7, 58, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Real-time updates
+        function updateDashboard() {
+            // This would typically make an AJAX call to get updated data
+            // For now, we'll just refresh the page every 5 minutes
+            setTimeout(() => {
+                location.reload();
+            }, 300000);
+        }
+
+        // Initialize real-time updates
+        updateDashboard();
+
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add loading states for better UX
+        document.querySelectorAll('a[href$=".php"]').forEach(link => {
+            link.addEventListener('click', function() {
+                this.style.opacity = '0.7';
+                this.style.pointerEvents = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
 

@@ -874,6 +874,61 @@
             height: 100%;
         }
         
+        /* Fresh Ink Section Styles */
+        .fresh-ink-item {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .fresh-ink-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff3333, #00bfff, #9945ff, #ff3333);
+            background-size: 400% 400%;
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0;
+            animation: gradient-shift 3s ease infinite;
+            transition: opacity 0.3s ease;
+        }
+        
+        .fresh-ink-item:hover::before {
+            opacity: 1;
+        }
+        
+        .fresh-ink-item:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(153, 69, 255, 0.4);
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Fresh Ink Title Animation */
+        .fresh-ink-title {
+            background: linear-gradient(45deg, #ff3333, #00bfff, #9945ff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: title-gradient 3s ease infinite;
+        }
+        
+        @keyframes title-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* Serial Number Styles for Main Gallery */
         .serial-number {
             position: absolute;
@@ -3477,7 +3532,7 @@
             <!-- Filter Tabs -->
             <div class="flex justify-center mb-12 reveal">
                 <div class="bg-dark-gray rounded-lg p-2 flex space-x-2">
-                    <a href="gallery.html" class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all inline-block text-gray-400 hover:text-white">All</a>
+                    <button class="filter-btn active px-6 py-3 rounded-lg font-semibold transition-all bg-neon-red text-white" data-filter="all">All</button>
                     <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all" data-filter="blackwork">Blackwork</button>
                     <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all" data-filter="realism">Realism</button>
                     <button class="filter-btn px-6 py-3 rounded-lg font-semibold transition-all" data-filter="minimal">Minimal</button>
@@ -3488,6 +3543,15 @@
             <!-- Gallery Grid -->
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid">
                 <!-- Gallery items will be populated by JavaScript -->
+            </div>
+            
+            <!-- See More Photos Button -->
+            <div class="text-center mt-12 reveal">
+                <a href="gallery.html" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-neon-red to-red-500 hover:from-red-500 hover:to-neon-red text-white font-bold text-lg rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-neon-red/25">
+                    <i class="fas fa-images mr-3"></i>
+                    See More Photos
+                    <i class="fas fa-arrow-right ml-3"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -4052,28 +4116,28 @@
                                             <div class="w-4 h-4 bg-purple-glow rounded-full animate-pulse"></div>
                                             <span class="text-sm uppercase tracking-wider text-gray-400 font-semibold">Latest Work</span>
                                         </div>
-                                        <h3 class="text-5xl font-bold text-white mb-6">Fresh <span class="text-purple-glow italic">Ink</span></h3>
+                                        <h3 class="text-5xl font-bold text-white mb-6">Fresh <span class="fresh-ink-title italic">Ink</span></h3>
                                         <p class="text-xl text-gray-300 leading-relaxed mb-8">Check out our latest masterpieces! Every tattoo tells a story, and we're honored to be part of each client's journey.</p>
                                         
-                                        <!-- Mini Gallery -->
-                                        <div class="grid grid-cols-3 gap-4">
-                                            <div class="aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-purple-glow/20 to-neon-red/20 p-0.5">
-                                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop&crop=center&auto=format&q=80" 
-                                                     alt="Recent Tattoo 1" 
+                                        <!-- Fresh Ink Mini Gallery -->
+                                        <div class="grid grid-cols-3 gap-3">
+                                            <div class="fresh-ink-item w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-purple-glow/20 to-neon-red/20 p-0.5">
+                                                <img src="img/na1.jpg" 
+                                                     alt="Fresh Ink Tattoo 1" 
                                                      class="w-full h-full object-cover rounded-lg hover:scale-110 transition-transform duration-300"
-                                                     onerror="this.src='https://picsum.photos/200/200?random=tattoo-1'">
+                                                     onerror="this.src='img/na2.jpg'">
                                             </div>
-                                            <div class="aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-neon-red/20 to-electric-blue/20 p-0.5">
-                                                <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=200&h=200&fit=crop&crop=center&auto=format&q=80" 
-                                                     alt="Recent Tattoo 2" 
+                                            <div class="fresh-ink-item w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-neon-red/20 to-electric-blue/20 p-0.5">
+                                                <img src="img/na3.jpg" 
+                                                     alt="Fresh Ink Tattoo 2" 
                                                      class="w-full h-full object-cover rounded-lg hover:scale-110 transition-transform duration-300"
-                                                     onerror="this.src='https://picsum.photos/200/200?random=tattoo-2'">
+                                                     onerror="this.src='img/na4.jpg'">
                                             </div>
-                                            <div class="aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-electric-blue/20 to-purple-glow/20 p-0.5">
-                                                <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=200&h=200&fit=crop&crop=center&auto=format&q=80" 
-                                                     alt="Recent Tattoo 3" 
+                                            <div class="fresh-ink-item w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-electric-blue/20 to-purple-glow/20 p-0.5">
+                                                <img src="img/na5.jpg" 
+                                                     alt="Fresh Ink Tattoo 3" 
                                                      class="w-full h-full object-cover rounded-lg hover:scale-110 transition-transform duration-300"
-                                                     onerror="this.src='https://picsum.photos/200/200?random=tattoo-3'">
+                                                     onerror="this.src='img/na6.jpg'">
                                             </div>
                                         </div>
                                     </div>
@@ -4081,10 +4145,10 @@
                                     <!-- Featured Image -->
                                     <div class="relative">
                                         <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-glow/20 to-neon-red/20 p-1">
-                                            <img src="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?w=600&h=750&fit=crop&crop=center&auto=format&q=80" 
-                                                 alt="Featured Tattoo Work" 
+                                            <img src="img/na7.jpg" 
+                                                 alt="Featured Fresh Ink Tattoo Work" 
                                                  class="w-full h-full object-cover rounded-xl hover:scale-105 transition-transform duration-700"
-                                                 onerror="this.src='https://picsum.photos/600/750?random=featured-tattoo'">
+                                                 onerror="this.src='img/na8.jpg'">
                                         </div>
                                         <!-- Decorative Elements -->
                                         <div class="absolute -top-6 -right-6 w-24 h-24 bg-purple-glow/20 rounded-full blur-2xl"></div>
@@ -5056,23 +5120,16 @@
                 
                 // Filter functionality
                 filterBtns.forEach(btn => {
-                    // Skip the "All" button since it's a link to gallery.html
-                    if (btn.href && btn.href.includes('gallery.html')) {
-                        return;
-                    }
-                    
                     btn.addEventListener('click', () => {
+                        // Update active button
                         filterBtns.forEach(b => {
-                            // Skip the "All" button from active state changes
-                            if (b.href && b.href.includes('gallery.html')) {
-                                return;
-                            }
                             b.classList.remove('active', 'bg-neon-red', 'text-white');
                             b.classList.add('text-gray-400');
                         });
                         btn.classList.add('active', 'bg-neon-red', 'text-white');
                         btn.classList.remove('text-gray-400');
                         
+                        // Filter gallery
                         displayGallery(btn.dataset.filter);
                     });
                 });
